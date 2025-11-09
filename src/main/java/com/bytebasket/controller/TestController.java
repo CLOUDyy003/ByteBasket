@@ -1,4 +1,4 @@
-package com.bytebasket;
+package com.bytebasket.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.bytebasket;
+package com.bytebasket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
