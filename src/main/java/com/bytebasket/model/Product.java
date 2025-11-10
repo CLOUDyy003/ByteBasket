@@ -51,7 +51,8 @@ public class Product {
 
     // Many products belong to one seller (User)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id", nullable = false)
+    //@JoinColumn(name = "seller_id", nullable = false)
+    @JoinColumn(name = "seller_id", nullable = true)
     private User seller;
 
     @PreUpdate
