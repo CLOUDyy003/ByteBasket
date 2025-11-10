@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - ByteBasket</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 { color: #667eea; margin-bottom: 10px; }
+        .welcome { color: #666; margin-bottom: 30px; }
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .info-card h3 { color: #667eea; margin-bottom: 15px; }
+        .info-row { margin-bottom: 10px; }
+        .info-row strong { color: #333; }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .logout-btn {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🛒 Customer Dashboard</h1>
+    <p class="welcome">Welcome back, <strong th:text="${user.firstName != null ? user.firstName : user.username}"></strong>!</p>
+
+    <div class="info-card">
+        <h3>Your Account Information</h3>
+        <div class="info-row"><strong>Username:</strong> <span th:text="${user.username}"></span></div>
+        <div class="info-row"><strong>Email:</strong> <span th:text="${user.email}"></span></div>
+        <div class="info-row"><strong>Phone:</strong> <span th:text="${user.phone ?: 'Not provided'}"></span></div>
+        <div class="info-row"><strong>Address:</strong> <span th:text="${user.address ?: 'Not provided'}"></span></div>
+        <div class="info-row"><strong>Member Since:</strong> <span th:text="${#temporals.format(user.createdAt, 'MMM dd, yyyy')}"></span></div>
+    </div>
+
+    <div class="info-card">
+        <h3>Quick Actions</h3>
+        <a href="/" class="btn">🛍️ Browse Products</a>
+        <a href="#" class="btn">🛒 View Cart</a>
+        <a href="#" class="btn">📦 My Orders</a>
+        <a href="/admin/data" class="btn btn-secondary">📊 View All Data</a>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="btn logout-btn">🚪 Logout</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,8 +1,11 @@
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\ByteBasketApplication.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\config\SecurityConfig.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\controller\AdminController.java
+D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\controller\AuthController.java
+D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\controller\DashboardController.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\controller\TestController.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\DataInitializer.java
+D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\dto\RegistrationDto.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\model\Cart.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\model\CartItem.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\model\Category.java
@@ -23,3 +26,4 @@ D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\repository\UserReposi
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\service\CategoryService.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\service\ProductService.java
 D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\service\RoleService.java
+D:\PersonalProject\ByteBasket\src\main\java\com\bytebasket\service\UserService.java

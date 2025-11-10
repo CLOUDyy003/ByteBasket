@@ -2,6 +2,7 @@ com\bytebasket\repository\RoleRepository.class
 com\bytebasket\controller\TestController.class
 com\bytebasket\repository\CategoryRepository.class
 com\bytebasket\model\Order.class
+com\bytebasket\controller\AuthController.class
 com\bytebasket\model\Cart.class
 com\bytebasket\ByteBasketApplication.class
 com\bytebasket\repository\ProductRepository.class
@@ -9,6 +10,7 @@ com\bytebasket\model\CartItem.class
 com\bytebasket\model\OrderItem.class
 com\bytebasket\repository\UserRepository.class
 com\bytebasket\service\CategoryService.class
+com\bytebasket\service\UserService.class
 com\bytebasket\model\Product.class
 com\bytebasket\repository\OrderRepository.class
 com\bytebasket\repository\CartItemRepository.class
@@ -17,9 +19,11 @@ com\bytebasket\model\OrderStatus.class
 com\bytebasket\repository\CartRepository.class
 com\bytebasket\DataInitializer.class
 com\bytebasket\model\Role.class
+com\bytebasket\controller\DashboardController.class
 com\bytebasket\service\ProductService.class
 com\bytebasket\model\Category.class
 com\bytebasket\config\SecurityConfig.class
+com\bytebasket\dto\RegistrationDto.class
 com\bytebasket\model\User.class
 com\bytebasket\service\RoleService.class
 com\bytebasket\repository\OrderItemRepository.class

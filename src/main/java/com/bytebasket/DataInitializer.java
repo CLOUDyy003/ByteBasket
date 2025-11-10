@@ -4,6 +4,7 @@ import com.bytebasket.model.*;
 import com.bytebasket.service.CategoryService;
 import com.bytebasket.service.ProductService;
 import com.bytebasket.service.RoleService;
+import com.bytebasket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,10 +22,16 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public void run(String... args) throws Exception {
         // Initialize Roles
         initializeRoles();
+
+        // Initialize Admin User (must be after roles)
+        initializeAdminUser();
 
         // Initialize Categories
         initializeCategories();
@@ -61,6 +68,30 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
+    private void initializeAdminUser() {
+        if (!userService.getUserByUsername("admin").isPresent()) {
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setEmail("admin@bytebasket.com");
+            admin.setPassword("admin123"); // Will be encrypted by UserService
+            admin.setFirstName("Admin");
+            admin.setLastName("User");
+            admin.setPhone("+1 555 0000");
+            admin.setAddress("ByteBasket HQ, Tech Street, Silicon Valley");
+
+            try {
+                userService.registerUser(admin, "ADMIN");
+                System.out.println("✅ Admin user created");
+                System.out.println("   Username: admin");
+                System.out.println("   Password: admin123");
+            } catch (Exception e) {
+                System.out.println("⚠️ Admin user initialization error: " + e.getMessage());
+            }
+        } else {
+            System.out.println("ℹ️ Admin user already exists");
+        }
+    }
+
     private void initializeCategories() {
         String[][] categories = {
                 {"Electronics", "Electronic devices and gadgets"},
@@ -87,21 +118,24 @@ public class DataInitializer implements CommandLineRunner {
     private void initializeProducts() {
         // Check if products already exist
         if (!productService.getAllProducts().isEmpty()) {
-            System.out.println("⚠️ Products already exist, skipping product initialization");
+            System.out.println("ℹ️ Products already exist, skipping product initialization");
             return;
         }
 
-        // For now, we'll create a few sample products without a seller
-        // We'll add sellers later when we implement user management
+        System.out.println("📦 Creating sample products...");
 
+        // Get categories
         Category electronics = categoryService.getCategoryByName("Electronics").orElse(null);
         Category clothing = categoryService.getCategoryByName("Clothing").orElse(null);
         Category books = categoryService.getCategoryByName("Books").orElse(null);
+        Category homeKitchen = categoryService.getCategoryByName("Home & Kitchen").orElse(null);
+        Category sports = categoryService.getCategoryByName("Sports").orElse(null);
 
+        // Electronics Products
         if (electronics != null) {
             createSampleProduct(
                     "Wireless Bluetooth Headphones",
-                    "Premium noise-canceling headphones with 30-hour battery life",
+                    "Premium noise-canceling headphones with 30-hour battery life. Crystal clear sound quality with deep bass.",
                     new BigDecimal("79.99"),
                     50,
                     "Sony",
@@ -110,46 +144,117 @@ public class DataInitializer implements CommandLineRunner {
 
             createSampleProduct(
                     "4K Smart TV 55 inch",
-                    "Ultra HD Smart TV with HDR and built-in streaming apps",
+                    "Ultra HD Smart TV with HDR and built-in streaming apps. Experience cinema-quality picture at home.",
                     new BigDecimal("499.99"),
                     20,
                     "Samsung",
                     electronics
             );
+
+            createSampleProduct(
+                    "Wireless Gaming Mouse",
+                    "High-precision gaming mouse with customizable RGB lighting and 16000 DPI sensor.",
+                    new BigDecimal("59.99"),
+                    75,
+                    "Logitech",
+                    electronics
+            );
         }
 
+        // Clothing Products
         if (clothing != null) {
             createSampleProduct(
                     "Cotton T-Shirt",
-                    "Comfortable 100% cotton t-shirt available in multiple colors",
+                    "Comfortable 100% cotton t-shirt available in multiple colors. Perfect for everyday wear.",
                     new BigDecimal("19.99"),
                     100,
-                    "Generic",
+                    "H&M",
                     clothing
             );
 
             createSampleProduct(
                     "Denim Jeans",
-                    "Classic fit denim jeans with stretch comfort",
+                    "Classic fit denim jeans with stretch comfort. Durable and stylish.",
                     new BigDecimal("49.99"),
                     75,
                     "Levi's",
                     clothing
             );
+
+            createSampleProduct(
+                    "Winter Jacket",
+                    "Warm waterproof winter jacket with hood. Perfect for cold weather.",
+                    new BigDecimal("89.99"),
+                    40,
+                    "North Face",
+                    clothing
+            );
         }
 
+        // Books
         if (books != null) {
             createSampleProduct(
                     "The Great Gatsby",
-                    "Classic American novel by F. Scott Fitzgerald",
+                    "Classic American novel by F. Scott Fitzgerald. A timeless story of love and tragedy.",
                     new BigDecimal("12.99"),
                     200,
                     "Penguin Classics",
                     books
             );
+
+            createSampleProduct(
+                    "Clean Code",
+                    "A handbook of agile software craftsmanship by Robert C. Martin. Essential reading for developers.",
+                    new BigDecimal("39.99"),
+                    150,
+                    "Prentice Hall",
+                    books
+            );
         }
 
-        System.out.println("✅ Sample products created");
+        // Home & Kitchen
+        if (homeKitchen != null) {
+            createSampleProduct(
+                    "Stainless Steel Cookware Set",
+                    "Professional 10-piece cookware set. Dishwasher safe and oven safe up to 500°F.",
+                    new BigDecimal("149.99"),
+                    30,
+                    "Cuisinart",
+                    homeKitchen
+            );
+
+            createSampleProduct(
+                    "Coffee Maker",
+                    "12-cup programmable coffee maker with auto-brew timer. Start your day right!",
+                    new BigDecimal("69.99"),
+                    45,
+                    "Mr. Coffee",
+                    homeKitchen
+            );
+        }
+
+        // Sports
+        if (sports != null) {
+            createSampleProduct(
+                    "Yoga Mat",
+                    "Extra thick yoga mat with carrying strap. Non-slip surface for all types of yoga.",
+                    new BigDecimal("29.99"),
+                    80,
+                    "Gaiam",
+                    sports
+            );
+
+            createSampleProduct(
+                    "Dumbbell Set",
+                    "Adjustable dumbbell set (10-50 lbs). Perfect for home workouts.",
+                    new BigDecimal("199.99"),
+                    25,
+                    "Bowflex",
+                    sports
+            );
+        }
+
+        System.out.println("✅ Sample products created successfully!");
     }
 
     private void createSampleProduct(String name, String description, BigDecimal price,
@@ -162,9 +267,9 @@ public class DataInitializer implements CommandLineRunner {
         product.setBrand(brand);
         product.setCategory(category);
         product.setActive(true);
-        // Note: seller will be null for now, we'll add it when we create users
+        // Note: seller is null for sample products - will be added when sellers create products
 
         productService.saveProduct(product);
-        System.out.println("   📦 Product created: " + name);
+        System.out.println("   📦 " + name + " - $" + price);
     }
 }
